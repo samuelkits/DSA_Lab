@@ -1,0 +1,48 @@
+class BeautySalon:
+    def __init__(self, capacity):
+        self.capacity = capacity
+        self.queue = []
+        self.front = 0
+        self.rear = -1
+        self.served = 0
+
+    def enqueue(self, customer):
+        if len(self.queue) == self.capacity:
+            print("Salon is full. Customer", customer, "cannot be added.")
+        else:
+            self.rear = (self.rear + 1) % self.capacity
+            self.queue.append(customer)
+            print("Customer", customer, "added to the queue.")
+
+    def dequeue(self):
+        if len(self.queue) == 0:
+            print("Salon is empty. No customers to serve.")
+        else:
+            customer1 = self.queue[self.front]
+            self.front = (self.front + 1) % self.capacity
+            self.queue.pop(0)
+            customer2 = self.queue[self.front] if len(self.queue) > 0 else None
+            self.front = (self.front + 1) % self.capacity
+            self.queue.pop(0) if len(self.queue) > 0 else None
+            self.served += 2
+            print("Customers", customer1, "and", customer2, "are being served.")
+
+    def print_salon(self):
+        print("Salon Queue:", self.queue)
+        print("Customers served:", self.served)
+
+# Create a Beauty Salon with a capacity of 20
+salon = BeautySalon(20)
+
+# Enqueue customers
+salon.enqueue(1)
+salon.enqueue(2)
+salon.enqueue(3)
+salon.enqueue(4)
+salon.enqueue(5)
+
+# Serve customers
+salon.dequeue()
+
+# Print the current state of the salon
+salon.print_salon()
