@@ -1,51 +1,19 @@
-def precedence(op):
-    if op == '+' or op == '-':
-        return 1
-    if op == '*' or op == '/':
-        return 2
-    if op == '^':
-        return 3
-    return 0
-
-def infix_to_postfix(expression):
+def is_balanced(expression):
     stack = []
-    result = []
+
+    matching_pairs = {')': '(', '}': '{', ']': '['}
+
     for char in expression:
-        if char.isalnum():
-            result.append(char)
-        elif char == '(':
+        if char in matching_pairs.values():
             stack.append(char)
-        elif char == ')':
-            while stack and stack[-1] != '(':
-                result.append(stack.pop())
-            stack.pop()
-        else:
-            while stack and precedence(char) <= precedence(stack[-1]):
-                result.append(stack.pop())
-            stack.append(char)
-   
-    while stack:
-        result.append(stack.pop())
-   
-    return "".join(result)
+        elif char in matching_pairs.keys():
+            if stack == [] or matching_pairs[char] != stack.pop():
+                return False
 
-expression = "A+(B*C-(D/E^F)*G)*H"
-print("Infix Expression:", expression)
-print("Postfix Expression:", infix_to_postfix(expression))
+    return stack == []
 
-def evaluate_postfix(expression):
-    stack = []
-    for char in expression:
-        if char.isalnum():
-            stack.append(char)
-        else:
-            operand2 = stack.pop()
-            operand1 = stack.pop()
-            result = f"({operand1}{char}{operand2})"
-            stack.append(result)
-   
-    return stack[0]
-
-postfix_expression = "ABC*DE/F^G*-H*+"
-result = evaluate_postfix(postfix_expression)
-print("The evaluated expression is:", result)
+expression = "{[()()]}"
+if is_balanced(expression):
+    print("Balanced")
+else:
+    print("Not Balanced")
