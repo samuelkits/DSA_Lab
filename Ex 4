@@ -1,0 +1,47 @@
+class Queue:
+    def __init__(self, max_size):
+        self.queue = []
+        self.max_size = max_size
+
+    def is_empty(self):
+        return len(self.queue) == 0
+
+    def is_full(self):
+        return len(self.queue) == self.max_size
+
+    def enqueue(self, item):
+        if self.is_full():
+            print("Queue overflow! Cannot add more elements.")
+        else:
+            self.queue.append(item)
+            print(f"Enqueued: {item}")
+
+    def dequeue(self):
+        if self.is_empty():
+            print("Queue underflow! No elements to remove.")
+        else:
+            removed_item = self.queue.pop(0)
+            print(f"Dequeued: {removed_item}")
+            return removed_item
+
+    def print_queue(self):
+        print("Current queue:", self.queue)
+
+max_size = 5
+q = Queue(max_size)
+
+q.dequeue()
+
+q.enqueue(1)
+q.enqueue(2)
+q.enqueue(3)
+q.print_queue()
+
+q.dequeue()
+q.print_queue()
+
+q.enqueue(4)
+q.enqueue(5)
+q.enqueue(6)
+q.enqueue(7)
+q.print_queue()
