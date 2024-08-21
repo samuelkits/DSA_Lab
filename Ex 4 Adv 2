@@ -1,0 +1,41 @@
+class Deque:
+    def __init__(self):
+        self.deque = []
+
+    def add_front(self, item):
+        self.deque.append(item)
+
+    def add_rear(self, item):
+        self.deque.insert(0, item)
+
+    def remove_front(self):
+        if self.is_empty():
+            return None
+        return self.deque.pop()
+
+    def remove_rear(self):
+        if self.is_empty():
+            return None
+        return self.deque.pop(0)
+
+    def is_empty(self):
+        return len(self.deque) == 0
+
+    def size(self):
+        return len(self.deque)
+
+# Create a temporary_appointed_employee queue
+temporary_appointed_employee = Deque()
+
+# Add employees in the order of their recruitment
+temporary_appointed_employee.add_rear("Employee1")
+temporary_appointed_employee.add_rear("Employee2")
+temporary_appointed_employee.add_rear("Employee3")
+
+# Promotion: Take the most experienced person (front of the deque)
+promoted_employee = temporary_appointed_employee.remove_front()
+print(f"Promoted Employee: {promoted_employee}")
+
+# Layoff: Choose the latest employee who joined (rear of the deque)
+laid_off_employee = temporary_appointed_employee.remove_rear()
+print(f"Laid Off Employee: {laid_off_employee}")
