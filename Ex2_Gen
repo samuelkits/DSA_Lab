@@ -26,7 +26,6 @@ class Stack:
     def print_stack(self):
         print("Stack content:", self.stack)
 
-# Example usage
 stack_capacity = 5
 my_stack = Stack(stack_capacity)
 
