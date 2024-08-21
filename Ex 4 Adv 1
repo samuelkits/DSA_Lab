@@ -1,0 +1,79 @@
+class CircularQueue:
+    def __init__(self, size):
+        self.size = size
+        self.queue = [None] * size
+        self.front = self.rear = -1
+
+    def is_full(self):
+        return (self.rear + 1) % self.size == self.front
+
+    def is_empty(self):
+        return self.front == -1
+
+    def enqueue(self, data):
+        if self.is_full():
+            print("Queue is full")
+            return False
+        if self.front == -1:
+            self.front = 0
+        self.rear = (self.rear + 1) % self.size
+        self.queue[self.rear] = data
+        return True
+
+    def dequeue(self):
+        if self.is_empty():
+            print("Queue is empty")
+            return None
+        data = self.queue[self.front]
+        if self.front == self.rear:
+            self.front = self.rear = -1
+        else:
+            self.front = (self.front + 1) % self.size
+        return data
+
+    def peek(self):
+        if self.is_empty():
+            return None
+        return self.queue[self.front]
+
+class RailwayReservationSystem:
+    def __init__(self):
+        self.confirmed = CircularQueue(100)
+        self.rac = CircularQueue(5)
+        self.waiting_list = CircularQueue(10)
+
+    def book_ticket(self, passenger_name):
+        if not self.confirmed.is_full():
+            self.confirmed.enqueue(passenger_name)
+            print(f"Ticket confirmed for {passenger_name}")
+        elif not self.rac.is_full():
+            self.rac.enqueue(passenger_name)
+            print(f"Added to RAC for {passenger_name}")
+        elif not self.waiting_list.is_full():
+            self.waiting_list.enqueue(passenger_name)
+            print(f"Added to Waiting List for {passenger_name}")
+        else:
+            print("All queues are full. Cannot book ticket.")
+
+    def cancel_ticket(self, passenger_name):
+        if self.confirmed.is_empty():
+            print("No confirmed tickets to cancel.")
+            return
+        # Simulate cancellation by removing the first confirmed ticket
+        cancelled_passenger = self.confirmed.dequeue()
+        print(f"Cancelled ticket for {cancelled_passenger}")
+        if not self.rac.is_empty():
+            rac_passenger = self.rac.dequeue()
+            self.confirmed.enqueue(rac_passenger)
+            print(f"Moved {rac_passenger} from RAC to Confirmed")
+            if not self.waiting_list.is_empty():
+                wl_passenger = self.waiting_list.dequeue()
+                self.rac.enqueue(wl_passenger)
+                print(f"Moved {wl_passenger} from Waiting List to RAC")
+
+# Example usage
+reservation_system = RailwayReservationSystem()
+reservation_system.book_ticket("Passenger 1")
+reservation_system.book_ticket("Passenger 2")
+# Add more bookings as needed
+reservation_system.cancel_ticket("Passenger 1")
