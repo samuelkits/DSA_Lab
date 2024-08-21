@@ -1,25 +1,19 @@
 def areBracketsBalanced(expr):
-    stack = []  # Declare a stack to hold the previous brackets
+    stack = []
 
     for char in expr:
         if char in ["(", "{", "["]:
-            # If the current character is an opening bracket, push it to the stack
             stack.append(char)
         elif char in [")", "}", "]"]:
-            # If the current character is a closing bracket
             if not stack:
-                # If the stack is empty, the expression is not balanced
                 return False
             top = stack.pop()
             if (top == "(" and char != ")") or (top == "{" and char != "}") or (top == "[" and char != "]"):
-                # If the popped character doesn't match the current closing bracket, it's not balanced
                 return False
 
-    # If stack is empty, return True (balanced), else return False
     return not stack
 
-# Example usage
-expr = "{()}[]"  # Example expression
+expr = "{()}[]"
 if areBracketsBalanced(expr):
     print("Balanced")
 else:
