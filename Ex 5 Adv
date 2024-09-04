@@ -1,0 +1,51 @@
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+def add_hex_lists(l1, l2):
+    carry = 0
+    dummy_head = ListNode(0)
+    current = dummy_head
+
+    while l1 or l2 or carry:
+        val1 = int(l1.val, 16) if l1 else 0
+        val2 = int(l2.val, 16) if l2 else 0
+        total = val1 + val2 + carry
+        carry = total // 16
+        current.next = ListNode(hex(total % 16)[2:])
+        current = current.next
+
+        if l1:
+            l1 = l1.next
+        if l2:
+            l2 = l2.next
+
+    return dummy_head.next
+
+def print_list(node):
+    while node:
+        print(node.val, end=" -> ")
+        node = node.next
+    print("None")
+def create_list_from_hex_string(hex_string):
+    head = None
+    for char in reversed(hex_string):
+        node = ListNode(char)
+        node.next = head
+        head = node
+    return head
+
+hex1 = "1A3"
+hex2 = "2B4"
+l1 = create_list_from_hex_string(hex1)
+l2 = create_list_from_hex_string(hex2)
+
+print("List 1:")
+print_list(l1)
+print("List 2:")
+print_list(l2)
+
+result = add_hex_lists(l1, l2)
+print("Result:")
+print_list(result)
