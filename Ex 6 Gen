@@ -1,0 +1,39 @@
+class ListOperations:
+    def __init__(self, initial_list=None):
+        if initial_list is None:
+            self.list = []
+        else:
+            self.list = initial_list
+
+    def insert_at_beginning(self, element):
+        self.list.insert(0, element)
+        return self.list
+
+    def insert_at_position(self, element, position):
+        if position < 0 or position > len(self.list):
+            return "Invalid position"
+        self.list.insert(position, element)
+        return self.list
+
+    def insert_at_end(self, element):
+        self.list.append(element)
+        return self.list
+
+    def delete_element(self, element):
+        if element in self.list:
+            self.list.remove(element)
+            return self.list
+        else:
+            return f"Element {element} not found in the list"
+
+list_ops = ListOperations([2, 3, 4])
+
+print("After inserting at the beginning:", list_ops.insert_at_beginning(1))
+
+print("After inserting at position 2:", list_ops.insert_at_position(3, 2))
+
+print("After inserting at the end:", list_ops.insert_at_end(5))
+
+print("After deleting an existing element:", list_ops.delete_element(3))
+
+print("After attempting to delete a non-existing element:", list_ops.delete_element(6))
