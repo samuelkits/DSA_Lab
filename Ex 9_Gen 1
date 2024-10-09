@@ -1,0 +1,33 @@
+class HashTable:
+    def __init__(self, size):
+        self.size = size
+        self.table = [[] for _ in range(size)]
+
+    def hash_function(self, key):
+        return key % self.size
+
+    def insert(self, key, value):
+        index = self.hash_function(key)
+        self.table[index].append((key, value))
+
+    def search(self, key):
+        index = self.hash_function(key)
+        for k, v in self.table[index]:
+            if k == key:
+                return v
+        return None
+
+    def display(self):
+        for i, bucket in enumerate(self.table):
+            print(f"Bucket {i}: {bucket}")
+
+hash_table = HashTable(10)
+
+hash_table.insert(1, "Value1")
+hash_table.insert(12, "Value12")
+hash_table.insert(23, "Value23")
+
+hash_table.display()
+
+print("Search for key 12:", hash_table.search(12))
+print("Search for key 5:", hash_table.search(5))
