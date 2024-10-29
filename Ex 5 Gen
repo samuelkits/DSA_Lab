@@ -15,20 +15,15 @@ def delete_element(lst, element):
         lst.remove(element)
     return lst
 
-# Test cases
-# Case 1: Insertion at the beginning
 lst = [2, 3, 4]
 print("After inserting 1 at the beginning:", insert_at_beginning(lst, 1))
 
-# Case 2: Insertion at a position
 lst = [1, 2, 4, 5]
 print("After inserting 3 at position 2:", insert_at_position(lst, 2, 3))
 
-# Case 3: Insertion at the end
 lst = [1, 2, 3]
 print("After inserting 4 at the end:", insert_at_end(lst, 4))
 
-# Case 4: Deletion of an existing element and an element not in the list
 lst = [1, 2, 3, 4]
 print("After deleting 3:", delete_element(lst, 3))
 print("After trying to delete 5 (not in the list):", delete_element(lst, 5))
